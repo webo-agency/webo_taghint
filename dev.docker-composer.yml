@@ -2,19 +2,17 @@ version: '2'
 
 services: 
   prestashop:
-    image: prestashop/prestashop:1.7-7.3-fpm
+    image: prestashop/prestashop:latest
     ports:
-      - 80:80
+      - 8005:80
+      - 9001:9000
     links:
       - mariadb:mariadb
     depends_on:
       - mariadb
     volumes:
-      - ./docker/common:/scripts
-      - ./src:/var/www/html
-      - ./src/modules:/var/www/html/modules
-      - ./src/themes:/var/www/html/themes
-      - ./src/override:/var/www/html/override
+      - ./dev:/var/www/html
+      # - ./src:/var/www/html/modules/webo_taghint
     environment:
       - PS_DEV_MODE=1
       - DB_SERVER=mariadb
@@ -24,7 +22,7 @@ services:
       - PS_INSTALL_AUTO=1
 
   mariadb:
-    image: mariadb/mariadb:10.8.3
+    image: mariadb:10.8.3
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=prestashop

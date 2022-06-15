@@ -46,8 +46,8 @@ jobs:
           php_version: 7.3
           version: 2
 
-      - name: Install dependencies
-        run: composer install --prefer-dist
+      # - name: Install dependencies
+      #   run: composer install --prefer-dist
 
       - name: Archive Generate
         uses: thedoctor0/zip-release@master

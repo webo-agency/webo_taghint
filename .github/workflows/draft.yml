@@ -40,11 +40,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      - name: Build composer
-        uses: php-actions/composer@v5
-        with:
-          php_version: 7.3
-          version: 2
+      # - name: Build composer
+      #   uses: php-actions/composer@v5
+      #   with:
+      #     php_version: 7.3
+      #     version: 2
 
       # - name: Install dependencies
       #   run: composer install --prefer-dist

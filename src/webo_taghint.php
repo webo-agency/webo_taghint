@@ -7,7 +7,7 @@ if(!defined('_PS_VERSION_')){
 use Doctrine\ORM\EntityManager;
 use PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller;
 
-class weboTagHint extends Module
+class webo_TagHint extends Module
 
 {
     /** @var string  */
@@ -15,7 +15,7 @@ class weboTagHint extends Module
 
     public function __construct()
     {
-        $this->name = "weboTagHint";
+        $this->name = "webo_taghint";
         $this->tab = "others";
         $this->version = "1.0.0";
         $this->author = "webo";
@@ -23,8 +23,8 @@ class weboTagHint extends Module
         $this->bootstrap = true;
         $this->need_instance = 0;
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
-        $this->displayName = $this->trans('Webo tag hint', [], 'Modules.weboTagHint.Admin');
-        $this->description = $this->trans('Module add popular tag proposed by admin under search', [], 'Modules.weboTagHint.Admin');
+        $this->displayName = $this->trans('Webo tag hint');
+        $this->description = $this->trans('Module add popular tag proposed by admin under search');
         parent::__construct();
         if(!$this->_path) {
             $this->_path = __PS_BASE_URI__ .'modules/' . $this->name . '/';

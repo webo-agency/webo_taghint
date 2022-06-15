@@ -53,7 +53,7 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: './src'
+          directory: 'src'
           filename: '${{ env.REPOSITORY_NAME }}.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
@@ -72,4 +72,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: 'draft'
-          FILES: ${{ env.REPOSITORY_NAME }}.zip
+          FILES: src/${{ env.REPOSITORY_NAME }}.zip

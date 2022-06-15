@@ -51,7 +51,7 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: './src'
+          directory: 'src'
           filename: '${{ env.REPOSITORY_NAME }}.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
@@ -62,4 +62,4 @@ jobs:
           generate_release_notes: true
           tag_name: 'latest'
           files: |
-            ${{ env.REPOSITORY_NAME }}.zip
+            src/${{ env.REPOSITORY_NAME }}.zip

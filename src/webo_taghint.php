@@ -22,10 +22,7 @@ class webo_taghint extends Module
         $this->need_instance = false;
         $this->bootstrap = true;
         $this->need_instance = 0;
-        $this->ps_versions_compliancy = [
-            'min' => '1.0',
-            'max' => '1.0'
-        ];
+        $this->ps_versions_compliancy = array('min' => '1.0', 'max' => _PS_VERSION_);
         $this->displayName = $this->trans('Webo tag hint');
         $this->description = $this->trans('Module add popular tag proposed by admin under search');
         parent::__construct();
@@ -37,29 +34,29 @@ class webo_taghint extends Module
 
     public function install()
     {
-        $sqlQueries = 'CREATE TABLE IF NOT EXISTS `'. _DB_PREFIX_ .'popular_tag` (
-            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-            `id_tag` BIGINT(20) UNSIGNED NOT NULL,
-            PRIMARY KEY (`id`),
-            INDEX `popular_tag_id_tag_foreign` (`id_tag` ASC),
-            CONSTRAINT `popular_tag_id_tag_foreign`
-                FOREIGN KEY (`id_tag`)
-                REFERENCES `'. _DB_PREFIX_ .'tag` (`id`)
-                ON DELETE CASCADE
-            ) ENGINE=' . _MYSQL_ENGINE_ .' DEFAULT CHARSET=utf8';
-            if(Db::getInstance()->execute($sqlQueries) == false)
-                {
-                    return false;
-                }
-        return true;
+        return parent::install();
+//        $sqlQueries = 'CREATE TABLE IF NOT EXISTS `'. _DB_PREFIX_ .'popular_tag` (
+//            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+//            `id_tag` varchar(255) NOT NULL,
+//            PRIMARY KEY (`id`)
+//            ) ENGINE=' . _MYSQL_ENGINE_ .'DEFAULT CHARSET=utf8';
+//            if(Db::getInstance()->execute($sqlQueries) == false)
+//                {
+//                    return false;
+//                }
+//        return true;
     }
 
     public function uninstall()
     {
-        $query = 'DROP TABLE IF EXISTS `' ._DB_PREFIX_ .'popular_tag`';
-        if (Db::getInstance()->execute($query) == false) {
-            return false;
-        }
-        $this->_errors[] = $this->trans('There was an error during the uninstallation. Please see documentation <a href="https://github.com/webo-agency/webo_taghint">here</a>');
+//        $query = 'DROP TABLE IF EXISTS `' ._DB_PREFIX_ .'popular_tag`';
+//        if (Db::getInstance()->execute($query) == false) {
+//            return false;
+//        }
+//        $this->_errors[] = $this->trans('There was an error during the uninstallation. Please see documentation <a href="https://github.com/webo-agency/webo_taghint">here</a>');
+    }
+
+    public function hook() {
+
     }
 }

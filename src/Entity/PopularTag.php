@@ -15,7 +15,35 @@ class PopularTag
     private $id;
 
     /**
-     *
+     * @var int
+     * @ORM\Column (name="id_tag", type="integer")
      */
+    private $tagId;
+
+    /**
+     * @return Id
+     */
+    public function getId(): Id
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTagId(): int
+    {
+        return $this->tagId;
+    }
+
+    /**
+     * @param Id $id
+     */
+    public function setId(Id $id) : string
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
 }

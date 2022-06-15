@@ -18,7 +18,12 @@ services:
       - DB_USER=root
       - DB_PASSWD=root
       - DB_NAME=prestashop
-      - PS_INSTALL_AUTO=0
+      - PS_FOLDER_INSTALL=installDirHasToBeRenamed
+      - PS_FOLDER_ADMIN=admin1234
+      - PS_LANGUAGE=pl
+      - ADMIN_MAIL=support@webo.agency
+      - ADMIN_PASSWD=password
+      - PS_INSTALL_AUTO=1
       - PS_DOMAIN=localhost:8005
 
   mariadb:

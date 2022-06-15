@@ -23,8 +23,8 @@ class weboTagHint extends Module
         $this->bootstrap = true;
         $this->need_instance = 0;
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
-        $this->displayName = $this->trans('Webo tag hint', );
-        $this->description = $this->trans('Module add popular tag proposed by admin under search');
+        $this->displayName = $this->trans('Webo tag hint', [], 'Modules.weboTagHint.Admin');
+        $this->description = $this->trans('Module add popular tag proposed by admin under search', [], 'Modules.weboTagHint.Admin');
         parent::__construct();
         if(!$this->_path) {
             $this->_path = __PS_BASE_URI__ .'modules/' . $this->name . '/';

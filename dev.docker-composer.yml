@@ -11,7 +11,7 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - ./src:/var/www/html/modules/webo_taghint
+      - ./src:/var/www/html/modules/weboTagHint
     environment:
       - PS_DEV_MODE=1
       - DB_SERVER=mariadb

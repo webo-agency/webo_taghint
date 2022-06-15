@@ -52,6 +52,7 @@ jobs:
         with:
           type: 'zip'
           directory: 'src'
+          path: '${{ env.REPOSITORY_NAME }}/'
           filename: '${{ env.REPOSITORY_NAME }}.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
 

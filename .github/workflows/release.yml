@@ -51,8 +51,8 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: 'src'
-          filename: '${{ env.REPOSITORY_NAME }}-latest.zip'
+          path: 'src/'
+          filename: '${{ env.REPOSITORY_NAME }}.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
       - name: Pre-Release

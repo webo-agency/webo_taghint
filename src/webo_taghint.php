@@ -47,8 +47,9 @@ class webo_taghint extends Module
         {
             return false;
         }
-        parent::install();
-        return true;
+        if(parent::install() && $this->registerHook('DisplayTagHint')) {
+            return true;
+        }
     }
 
     public function uninstall()

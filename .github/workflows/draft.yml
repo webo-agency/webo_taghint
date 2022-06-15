@@ -1,0 +1,75 @@
+---
+name: Draft
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+env:
+  REPO_NAME: ${{ github.event.repository.name }}
+
+jobs:
+  release:
+    runs-on: 'ubuntu-latest'
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2.3.4'
+        with:
+          lfs: true
+
+      - run: echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Build composer
+        uses: php-actions/composer@v5
+        with:
+          php_version: 7.3
+          version: 2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Archive Generate
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          path: 'src'
+          filename: '${{ env.REPOSITORY_NAME }}-draft.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config-name: 'release-drafter.yml'
+          tag: 'draft'
+          upload_url: ${{ steps.archive_release.outputs.upload_url }}
+
+      - name: Archive Release
+        id: archive_release
+        run: |
+          gh release upload --clobber ${{ env.VERSION }} ${{ env.FILES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: 'draft'
+          FILES: ${{ env.REPOSITORY_NAME }}-draft.zip

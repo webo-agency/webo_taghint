@@ -72,4 +72,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: 'draft'
-          FILES: ${{ env.REPOSITORY_NAME }}-draft.zip
+          FILES: ${{ env.REPOSITORY_NAME }}.zip

@@ -34,29 +34,40 @@ class webo_taghint extends Module
 
     public function install()
     {
-        return parent::install();
-//        $sqlQueries = 'CREATE TABLE IF NOT EXISTS `'. _DB_PREFIX_ .'popular_tag` (
-//            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-//            `id_tag` varchar(255) NOT NULL,
-//            PRIMARY KEY (`id`)
-//            ) ENGINE=' . _MYSQL_ENGINE_ .'DEFAULT CHARSET=utf8';
-//            if(Db::getInstance()->execute($sqlQueries) == false)
-//                {
-//                    return false;
-//                }
-//        return true;
+        if(Db::getInstance()->execute('CREATE TABLE IF NOT EXISTS `'. _DB_PREFIX_ .'popular_tag` (
+            `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `id_tag` int(10) UNSIGNED NOT NULL,
+            PRIMARY KEY (`id`),
+            INDEX `popular_tag_id_tag_foreign` (`id_tag` ASC),
+            CONSTRAINT `popular_tag_id_tag_foreign`
+                FOREIGN KEY (`id_tag`)
+                REFERENCES `'. _DB_PREFIX_ .'tag` (`id_tag`)
+                ON DELETE CASCADE
+        ) ENGINE='._MYSQL_ENGINE_ .' DEFAULT CHARSET=UTF8') == false)
+        {
+            return false;
+        }
+        parent::install();
+        return true;
     }
 
     public function uninstall()
     {
-//        $query = 'DROP TABLE IF EXISTS `' ._DB_PREFIX_ .'popular_tag`';
-//        if (Db::getInstance()->execute($query) == false) {
-//            return false;
-//        }
-//        $this->_errors[] = $this->trans('There was an error during the uninstallation. Please see documentation <a href="https://github.com/webo-agency/webo_taghint">here</a>');
+        if (Db::getInstance()->execute('DROP TABLE IF EXISTS `' ._DB_PREFIX_ .'popular_tag`') == false) {
+            return false;
+        }
+        if (parent::uninstall()) {
+            return true;
+        }
+        $this->_errors[] = $this->trans('There was an error during the uninstallation. Please see documentation <a href="https://github.com/webo-agency/webo_taghint">here</a>');
+        return false;
     }
 
-    public function hook() {
-
+    public function hookDisplayTagHint()
+    {
+        $this->context->smarty->assign([
+            'tag_hint_show' => displayPopularTag::getAllPopularTag()
+        ]);
+        return $this->display(__FILE__, 'views/templates/hook/displayPopularTag.tpl');
     }
 }

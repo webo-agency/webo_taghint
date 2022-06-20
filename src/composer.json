@@ -1,0 +1,30 @@
+{
+    "name": "prestashop/webo_taghint",
+    "description": "Create popular tag hint",
+    "type": "prestashop-module",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Prestashop\\Module\\WeboTaghint\\": "src/"
+        },
+        "classmap": [
+            "webo_taghint.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Webo.Agency"
+        }
+    ],
+    "repositories": [
+        {
+            "url": "https://github.com/webo-agency/webo_taghint.git",
+            "type": "git"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "config": {
+        "prepend-autoloader": false
+    }
+}

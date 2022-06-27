@@ -1,0 +1,7 @@
+addpopular_tag:
+  path: /addpopular_tag/create
+  methods: [GET]
+  defaults:
+    _controller: 'Prestashop\Module\WeboTaghint\Controller\AdminWeboTagHintCreatecontroller::create'
+    _legacy_controller: AdminLinkWidget
+    _legacy_link: AdminLinkWidget

@@ -1,8 +1,8 @@
 {
-    "name": "prestashop/webo_taghint",
+    "name": "webo_taghint",
     "description": "Create popular tag hint",
     "type": "prestashop-module",
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
             "Prestashop\\Module\\WeboTaghint\\": "src/"

@@ -1,5 +1,6 @@
 <?php
 
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -19,12 +20,51 @@ class AdminWeboTagHintController extends ModuleAdminController
         $this->_join = 'LEFT JOIN `'._DB_PREFIX_.'tag` t ON t.id_tag = a.id_tag';
         $this->fields_list = [
             'id' => ['title' => 'ID', 'class' => 'fixed-width-xs'],
-            'name' => ['title' => 'NAME']
+            'name' => ['title' => 'NAME', 'required'=> true, 'type'=> 'textarea', 'align' => 'center'],
         ];
-//        Tools::redirectAdmin(Context::getContext()->link->getAdminLink('AdminModules').'&configure=webo_taghint');
     }
 
-//    protected function getFromClause() {
-//        return str_replace(_DB_PREFIX_, '', parent::getFromClause());
-//    }
+    public function initPageHeaderToolbar()
+    {
+        if(empty($this->display))
+        {
+            $this->page_header_toolbar_btn['new_tag'] = [
+                'href' => self::$currentIndex . '&addpopular_tag&token=' . $this->token,
+                'desc' => $this->trans('Add new popular tag', [], 'Admin.WeboTagHint.Feature'),
+                'icon' => 'process-icon-new',
+            ];
+        }
+        parent::initPageHeaderToolbar();
+    }
+
+    public function renderForm()
+    {
+        /** @var Tag $obj */
+        if (!($obj = $this->loadObject(true))) {
+            return;
+        }
+        $tag = Db::getInstance()->executeS('SELECT * FROM `'. _DB_PREFIX_ .'tag` ORDER BY name ASC');
+        $this->fields_form = [
+            'legend' => [
+                'title' => $this->trans('Tag', [], 'Admin.Shopparameters.Feature'),
+                'icon' => 'icon-list-ul'
+            ],
+            'input' => [
+                ['name'=>'name','type'=>'select','label'=>'Select Tag:','required'=>true, 'options'=>['query'=> $tag, 'id'=> 'id_tag', 'name'=> 'name']],
+            ],
+            'submit' => [
+                'title' => $this->trans('Save', [], 'Admin.Actions'),
+            ]
+        ];
+        return parent::renderForm();
+    }
+
+    public function postProcess()
+    {
+        if(Tools::isSubmit('submitAdd'. $this->table))
+        {
+            echo "kliknolem";
+        }
+        return parent::postProcess();
+    }
 }

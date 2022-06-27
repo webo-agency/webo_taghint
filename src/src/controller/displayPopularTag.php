@@ -1,6 +1,6 @@
 <?php
 
-namespace Prestashop\Module\WeboTaghint\Classes\Controller;
+namespace Prestashop\Module\WeboTaghint\Controller;
 
 use Db;
 

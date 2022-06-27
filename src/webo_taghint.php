@@ -9,7 +9,7 @@ if (file_exists($autoloadPath)) {
     require_once $autoloadPath;
 }
 
-use Prestashop\Module\WeboTaghint\Classes\Controller\displayPopularTag;
+use Prestashop\Module\WeboTaghint\Controller\displayPopularTag;
 use PrestaShop\Module\DemoDoctrine\Database\QuoteInstaller;
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
@@ -83,14 +83,22 @@ class webo_TagHint extends Module implements WidgetInterface
         if (parent::uninstall()) {
             return true;
         }
-        $this->_errors[] = $this->trans('There was an error during the uninstallation. Please see documentation <a href="https://github.com/webo-agency/webo_taghint">here</a>');
+        $this->_errors[] = $this->trans('There was an error during the uninstallation. Please see documentation <a href="https://github.com/webo-agency/webo_taghint">here</a>', array(), 'Modules.webo_TagHint.Admin');
         return false;
     }
 
     public function renderWidget($hookName, array $configuration)
     {
         $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
-        return $this->fetch('module:'.$this->name.'/views/templates/hook/displayPopularTag.tpl');
+        try {
+            return $this->fetch('module:'.$this->name.'/views/templates/hook/displayPopularTag.tpl');
+        } catch(Exception $e) {
+            if(strpos($e->getMessage(), 'displayPopularTag.tpl')!== false)
+            {
+                return $this->fetch('module:'.$this->name.'/views/templates/hook/displayPopularTag.tpl');
+            }
+            return false;
+        };
     }
 
     public function getWidgetVariables($hookName, array $configuration)
@@ -99,21 +107,4 @@ class webo_TagHint extends Module implements WidgetInterface
             'displayedTag' => displayPopularTag::getAllPopularTag()
         ];
     }
-
-//    public function displayForm()
-//    {
-//        $form = [
-//          'form' => [
-//              'legend' => [
-//                  'title' => $this->l('Settings'),
-//              ],
-//          ]
-//        ];
-//        $help_me = new HelperForm();
-//        $help_me->table = $this->table;
-//        $help_me->name_controller = $this->name;
-//        $help_me->token = Tools::getAdminTokenLite('AdminModules');
-//        $help_me-> currentIndex = AdminController::$currentIndex . '&' . http_build_query(['configure' => $this->name]);
-//        $help_me->submit_action = 'submit' . $this->name;
-//    }
 }

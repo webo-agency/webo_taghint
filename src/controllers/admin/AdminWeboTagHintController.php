@@ -63,8 +63,13 @@ class AdminWeboTagHintController extends ModuleAdminController
     {
         if(Tools::isSubmit('submitAdd'. $this->table))
         {
-            echo "kliknolem";
+            return $this->weboCreatePopularTag();
         }
         return parent::postProcess();
+    }
+
+    public function weboCreatePopularTag()
+    {
+        echo "ok";
     }
 }

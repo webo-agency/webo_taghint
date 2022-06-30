@@ -68,8 +68,9 @@ class AdminWeboTagHintController extends ModuleAdminController
         return parent::postProcess();
     }
 
-    public function weboCreatePopularTag()
+    public function weboCreatePopularTag($idtag)
     {
+
         echo "ok";
     }
 }

@@ -63,14 +63,14 @@ class AdminWeboTagHintController extends ModuleAdminController
     {
         if(Tools::isSubmit('submitAdd'. $this->table))
         {
-            return $this->weboCreatePopularTag();
+            return $this->weboCreatePopularTag("1");
         }
         return parent::postProcess();
     }
 
     public function weboCreatePopularTag($idtag)
     {
-
-        echo "ok";
+        Db::getInstance()->execute('INSERT INTO `'. _DB_PREFIX_ .'tag` (`id_tag`) VALUES ("'. $idtag .'")');
+        return "wyprodukowane";
     }
 }

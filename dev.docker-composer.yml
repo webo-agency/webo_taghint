@@ -1,4 +1,4 @@
-version: '2'
+version: '3.8'
 
 services: 
   prestashop:
@@ -6,11 +6,10 @@ services:
     ports:
       - 8005:80
       - 9001:9000
-    links:
-      - mariadb:mariadb
     depends_on:
       - mariadb
     volumes:
+      - prestashop:/var/www/html
       - ./:/var/www/html/modules/webo_taghint
     environment:
       - PS_DEV_MODE=1
@@ -23,7 +22,7 @@ services:
       - PS_LANGUAGE=pl
       - ADMIN_MAIL=support@webo.agency
       - ADMIN_PASSWD=password
-      - PS_INSTALL_AUTO=1
+      - PS_INSTALL_AUTO=0
       - PS_DOMAIN=localhost:8005
 
   mariadb:
@@ -31,10 +30,12 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=prestashop
+    volumes:
+      - db:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    links:
+    depends_on:
       - mariadb
     ports: 
       - 81:80 
@@ -42,3 +43,27 @@ services:
       - PMA_HOST=mariadb
       - PMA_USER=root
       - PMA_PASSWORD=root
+
+  openssh-server:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: openssh-server
+    hostname: openssh-server #optional
+    environment:
+      - PUID=33
+      - PGID=33
+      - TZ=Europe/London
+      - SUDO_ACCESS=true #optional
+      - PASSWORD_ACCESS=true #optional
+      - USER_PASSWORD=password #optional
+      - USER_NAME=prestashop #optional
+    volumes:
+      - config:/config
+      - prestashop:/home/prestashop
+    ports:
+      - 2222:2222
+    restart: unless-stopped
+
+volumes:
+  prestashop:
+  config:
+  db:

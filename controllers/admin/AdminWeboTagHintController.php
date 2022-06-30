@@ -71,6 +71,7 @@ class AdminWeboTagHintController extends ModuleAdminController
     public function weboCreatePopularTag($idtag)
     {
         Db::getInstance()->execute('INSERT INTO `'. _DB_PREFIX_ .'tag` (`id_tag`) VALUES ("'. $idtag .'")');
+        $this->_errors();
         return "wyprodukowane";
     }
 }

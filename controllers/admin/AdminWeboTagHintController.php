@@ -14,8 +14,9 @@ class AdminWeboTagHintController extends ModuleAdminController
         $this->id_lang = $this->context->language->id;
         $this->default_form_language = $this->context->language->id;
         $this->_defaultOrderBy = 'a.id';
+        $this->OrderBy = 'a.id';
         $this->table = 'popular_tag';
-        $this->_select = 't.name as `name`';
+        $this->_select = 't.name as `name`, a.id as `id_configuration`';
         $this->addRowAction('delete');
         $this->_join = 'LEFT JOIN `'._DB_PREFIX_.'tag` t ON t.id_tag = a.id_tag';
         $this->fields_list = [
@@ -63,15 +64,34 @@ class AdminWeboTagHintController extends ModuleAdminController
     {
         if(Tools::isSubmit('submitAdd'. $this->table))
         {
-            return $this->weboCreatePopularTag("1");
+            return $this->weboCreatePopularTag(Tools::getValue('name'));
+        }else {
+            if(Tools::isSubmit('delete'.$this->table)) {
+                if(Tools::getValue('id_configuration'))
+                {
+                    return $this->weboDeletePopularTag(Tools::getValue('id_configuration'));
+                }
+            }
         }
         return parent::postProcess();
     }
 
-    public function weboCreatePopularTag($idtag)
+    public function weboCreatePopularTag($id_tag)
     {
-        Db::getInstance()->execute('INSERT INTO `'. _DB_PREFIX_ .'tag` (`id_tag`) VALUES ("'. $idtag .'")');
-        $this->_errors();
-        return "wyprodukowane";
+        if(Db::getInstance()->execute('INSERT INTO `'. _DB_PREFIX_ .'popular_tag` (`id_tag`) VALUES ("'. $id_tag .'")') !== false) {
+            $this->confirmations[] = "You Add Popular Tag";
+        }else {
+            $this->errors[] = Tools::displayError("Something was problem with add Popular Tag");
+        }
     }
+
+    public function weboDeletePopularTag($id_tag)
+    {
+        if(Db::getInstance()->execute('DELETE FROM `'. _DB_PREFIX_ .'popular_tag` WHERE id="'. $id_tag .'"') !== false) {
+            $this->confirmations[] = "You Delete Popular Tag";
+        }else {
+            $this->errors[] = Tools::displayError("Something was problem with delete Popular Tag");
+        }
+    }
+
 }

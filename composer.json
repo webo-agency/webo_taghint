@@ -1,5 +1,5 @@
 {
-    "name": "webo_taghint",
+    "name": "prestashop/webo_taghint",
     "description": "Create popular tag hint",
     "type": "prestashop-module",
     "license": "GPL-3.0-or-later",

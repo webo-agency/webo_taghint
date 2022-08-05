@@ -44,7 +44,7 @@ class AdminWeboTagHintController extends ModuleAdminController
         if (!($obj = $this->loadObject(true))) {
             return;
         }
-        $tag = Db::getInstance()->executeS('SELECT * FROM `'. _DB_PREFIX_ .'tag` ORDER BY name ASC');
+        $tag = Db::getInstance()->executeS('SELECT * FROM `'. _DB_PREFIX_ .'tag` WHERE `id_lang` = ' . (int) $this->context->language->id  . ' ORDER BY name ASC');
         $this->fields_form = [
             'legend' => [
                 'title' => $this->trans('Tag', [], 'Admin.Shopparameters.Feature'),
